@@ -16,8 +16,8 @@ function _stage1( n ) {
     if ( n < 1 ) {
         return false;
     }
-    var result = Math.log2( n ).toString();
-    return !( result === '-Infinity' || result.indexOf( '.' ) !== -1 );
+    var result = Math.log2( n );
+    return parseInt( result ) === result;
 }
 
 /**
@@ -35,7 +35,8 @@ function _stage2( n ) {
     }
     if ( n % 2 === 0 ) {
         n = n / 2;
-        return isPowerOfTwo( n );
+        // 递归
+        return _stage2( n );
     } else {
         return false;
     }
