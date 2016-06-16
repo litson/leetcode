@@ -3,9 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
-    <title>$Title$</title>
+    <title></title>
+
 </head>
 <body>
-<script src="./build/seed.js"></script>
+
+TEST
+
+
+<script>
+    /**
+     * @param {number[]} nums
+     * @return {boolean}
+     */
+    var containsDuplicate = function ( nums ) {
+        var result = false;
+
+        nums = nums.sort();
+
+        var length     = nums.length;
+        var startIndex = 0;
+
+        while ( length-- ) {
+
+            if ( compare( startIndex ) ) {
+                result = true;
+                break;
+            } else {
+                startIndex += 2;
+            }
+        }
+
+        function compare( index ) {
+
+            var a = nums[index + 1];
+            var b = nums[index];
+            var c = nums[index - 1];
+
+            if ( b === undefined ) {
+                return false;
+            }
+
+            return isSame( a, b ) || isSame( b, c );
+        }
+
+        function isSame( a, b ) {
+            return a === b;
+        }
+
+        return result;
+    };
+
+    console.log(
+            containsDuplicate(
+                    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+            )
+    );
+
+
+    /**
+     * @param {number[]} nums
+     * @return {number}
+     */
+    var majorityElement = function ( nums ) {
+
+        var max      = {};
+        var len      = nums.length;
+        var cache    = {};
+        var boundary = Math.round( len / 2 );
+
+        if ( len === 1 || len === 2 ) {
+            return nums[0];
+        }
+
+        nums.forEach( function ( item, index ) {
+            if ( !cache[item] ) {
+                cache[item] = 1;
+                if ( !max.k ) {
+                    max.k = item;
+                    max.v = 1;
+                }
+            } else {
+                cache[item] = cache[item] + 1;
+                var times   = cache[item];
+
+                if ( !max.k || max.v < times ) {
+                    max.k = item;
+                    max.v = times;
+                }
+
+                if ( times >= boundary ) {
+                    return false;
+                }
+            }
+        } );
+
+        return max.k;
+    };
+
+    console.log( majorityElement(
+            [2, 2]
+    ) );
+
+</script>
 </body>
 </html>
